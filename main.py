@@ -47,7 +47,7 @@ def register():
         name = form.name.data
         password = form.password.data
         form.name.data = ''
-        flash('Everything went allright!')
+        flash('Everything went alright!')
     return render_template('user_register.html',
     name = name,
     password = password,
