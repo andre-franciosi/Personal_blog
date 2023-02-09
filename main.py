@@ -1,4 +1,4 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, flash
 from flask_wtf import FlaskForm
 from wtforms import StringField, SubmitField, PasswordField
 from wtforms.validators import DataRequired
@@ -47,6 +47,7 @@ def register():
         name = form.name.data
         password = form.password.data
         form.name.data = ''
+        flash('Everything went allright!')
     return render_template('user_register.html',
     name = name,
     password = password,
