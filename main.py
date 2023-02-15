@@ -1,18 +1,13 @@
 from flask import Flask, render_template, request, session, redirect, url_for
+from flask_wtf import FlaskForm
+from wtforms import StringField, SubmitField
+from wtforms.validators import DataRequired
 import os
 
-class User:
-    def __init__(self, id, username, password):
-        self.id =id
-        self.username = username
-        self.password = password
-    
-    def __repr__(self) :
-        return f'<Users: {self.username}>'
+class UserForm(FlaskForm):
+    user = StringField("What's your user?", validators = [DataRequired()])
+    login = SubmitField("Log in")
 
-users = []
-users.append(User(1,username='Andre',password='123'))
-users.append(User(2,username='Ricardo',password='321'))
 
 app = Flask(__name__)
 SECRET_KEY = os.urandom(32)
@@ -30,18 +25,15 @@ def index():
 
 @app.route('/login', methods = ['GET', 'POST'])
 def login():
-    if request.method == 'POST':
-        session.pop('user_id', None)
-        username = request.form['username']
-        password = request.form['password']
+    user = None
+    form = UserForm()
+    if form.validate_on_submit():
+        user = form.user.data
+        form.user.data = ''
+    return render_template('login.html',
+    user = user,
+    form = form)
 
-        user = [x for x in users if x.username == username][0]
-        if user and user.password == password:
-            session['user.id'] = user.id
-            return redirect(url_for('index'))
-        return redirect(url_for('login'))
-
-    return render_template('login.html')
 #error pages
 
 # Invalida URL (404)
