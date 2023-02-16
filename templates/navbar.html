@@ -17,8 +17,15 @@
               <li><a class="dropdown-item" href="#">About me</a></li>
             </ul>
           </li>
-          <li class="nav-item fw-bold fs-4">
-            <a class="nav-link active position-absolute top-10 end-0" aria-current="page" href="{{ url_for('login') }}">Login</a>
+          <li class="nav-item dropdown position-absolute top-10 end-0">
+            <a class="nav-link dropdown-toggle fw-bold fs-4" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              Log in
+            </a>
+            <ul class="dropdown-menu dropdown-menu-end">
+                <li><a class="dropdown-item" href="#">Log in</a></li>
+              <li><hr class="dropdown-divider"></li>
+              <li><a class="dropdown-item" href="{{ url_for('signup') }}">Sign up</a></li>
+            </ul>
           </li>
         </ul>
       </div>
