@@ -2,10 +2,15 @@
 
 {% block content %}
 
-{% if user %}
-    <h1>Hello {{ user| capitalize  }}</h1>
+{% if name %}
+    <h1>User added</h1>
     </br>
-    <img src="{{ url_for('static', filename = 'images/image_user.jpg') }}" width="1300">
+
+    {% for our_user in our_users %}
+
+    <p>{{our_user.id}} | {{our_user.name}} - {{our_user.email}} </p> 
+
+    {% endfor %}
 {% else %}
     <h1>Sign up</h1>
     <form method="post">
@@ -13,8 +18,8 @@
       <p>
         {{ form.hidden_tag() }}
 
-        {{ form.user.label(class="form-label") }}
-        {{ form.user(class="form-control") }}
+        {{ form.name.label(class="form-label") }}
+        {{ form.name(class="form-control") }}
         <br/>
         {{ form.email.label(class="form-label") }}
         {{ form.email(class="form-control") }}
@@ -25,12 +30,6 @@
     </form>
 
     <br/><br/><br/>
-
-{% for user in users %}
-
-    {{user.id}} | {{user.user}} - {{user.email}} </br>
-
-{% endfor %}
 
 {% endif %}
 

@@ -7,7 +7,7 @@ from datetime import datetime
 import os
 
 class UserForm(FlaskForm):
-    user = StringField("What's your user?", validators = [DataRequired()])
+    name = StringField("What's your user?", validators = [DataRequired()])
     email = StringField("What's your email?", validators = [DataRequired()])
     signup = SubmitField("Sign up")
 
@@ -43,23 +43,23 @@ def index():
 
 @app.route('/register', methods = ['GET', 'POST'])
 def signup():
-    user = None
+    name = None
     email = None
     form = UserForm()
     if form.validate_on_submit():
         user = Users.query.filter_by(email=form.email.data).first()
         if user is None:
-            user = Users(user=form.user.data, email = form.email.data)
+            user = Users(name=form.name.data, email = form.email.data)
             db.session.add(user)
             db.session.commit()
-        user = user.form.data
-        form.user.data = ''
+        name = form.name.data
+        form.name.data = ''
         form.email.data = ''
-    users = Users.query.order_by(Users.date_added)
+    our_users = Users.query.order_by(Users.date_added)
     return render_template('signup.html',
-    user = user,
+    name = name,
     email = email,
-    users = users,
+    our_users = our_users,
     form = form)
 
 #error pages
