@@ -4,13 +4,7 @@
 
 {% if name %}
     <h1>Usuário adicionado</h1>
-    </br>
 
-    {% for our_user in our_users %}
-
-    <p>{{our_user.id}} | {{our_user.name}} - {{our_user.email}} </p> 
-
-    {% endfor %}
 {% else %}
     <h1>Sign up</h1>
     <form method="post">

@@ -4,6 +4,7 @@ from wtforms import StringField, SubmitField
 from wtforms.validators import DataRequired
 from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime
+import passwords
 import os
 
 class UserForm(FlaskForm):
@@ -14,13 +15,18 @@ class UserForm(FlaskForm):
 
 app = Flask(__name__)
 #Database
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///users.db'
+# Old DB
+#app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///users.db'
+#New DB (MySQL)
+app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:' + passwords.mysql_password + '@localhost/our_users'
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 #Secret Key
-SECRET_KEY = os.urandom(32)
-app.config['SECRET_KEY'] = SECRET_KEY
+app.config['SECRET_KEY'] = passwords.secret_key
 
 db = SQLAlchemy(app)
+
+app.app_context().push()
 
 class Users(db.Model):
     id = db.Column(db.Integer, primary_key = True)
